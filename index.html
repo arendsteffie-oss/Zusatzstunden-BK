@@ -64,31 +64,31 @@
             const [isDemo, setIsDemo] = useState(true);
             const [slots, setSlots] = useState([]);
             
-            // Firebase-Konfiguration
+            // Firebase-Konfigurations-States
             const [showDbSetup, setShowDbSetup] = useState(false);
             const [fbApiKey, setFbApiKey] = useState('');
             const [fbProjectId, setFbProjectId] = useState('');
 
-            // UI Navigation & Ansichten
+            // UI-Steuerung
             const [isTeacher, setIsTeacher] = useState(false);
             const [pinInput, setPinInput] = useState('');
             const [pinCorrect, setPinCorrect] = useState(false);
             const [showQR, setShowQR] = useState(false);
             
-            // Terminerstellung (Lehrer)
+            // Terminerstellung
             const [newDate, setNewDate] = useState('');
             const [newTime, setNewTime] = useState('');
             const [newRoom, setNewRoom] = useState('BK 1');
             const [customRoom, setCustomRoom] = useState('');
             
-            // Buchungs-Prozedur (Schüler)
+            // Buchung durch Schüler
             const [bookingSlot, setBookingSlot] = useState(null);
             const [studentName, setStudentName] = useState('');
             const [studentClass, setStudentClass] = useState('');
             const [missedCount, setMissedCount] = useState('1. Fehlstunde');
             const [acceptTerms, setAcceptTerms] = useState(false);
 
-            // Toast Alerts / Statusmeldungen
+            // Toast-Meldungen
             const [notification, setNotification] = useState(null);
 
             const showToast = (message, type = 'info') => {
@@ -118,7 +118,7 @@
                     if (localSlots) {
                         setSlots(JSON.parse(localSlots));
                     } else {
-                        // Initiale Beispiel-Termine zum direkten Ausprobieren
+                        // Vorgefertigte Demo-Termine
                         const initialDemo = [
                             { id: '1', date: '2026-06-12', time: '13:30', room: 'BK 1', status: 'available', bookings: [] },
                             { id: '2', date: '2026-06-17', time: '15:00', room: 'BK 2', status: 'available', bookings: [] }
@@ -155,7 +155,7 @@
                     showToast("Live-Datenbank erfolgreich verbunden!", "success");
                 } catch (err) {
                     console.error(err);
-                    showToast("Fehler beim Initialisieren. Nutze den Offline-Modus.", "error");
+                    showToast("Verbindung fehlgeschlagen. Offline-Modus aktiv.", "error");
                     loadDemoData();
                 }
             };
@@ -192,8 +192,8 @@
             const handlePinSubmit = (e) => {
                 e.preventDefault();
                 
-                // Direkter, stabiler Textvergleich um Browser-Blockaden im Offline-Modus zu verhindern
-                if (pinInput.trim() === "LaraCroft33") {
+                // Direkter Textvergleich (Funktioniert stabil auf allen Mobilgeräten und Browsern)
+                if (pinInput.trim() === "54321") {
                     setPinCorrect(true);
                     setPinInput('');
                     showToast("Erfolgreich eingeloggt.", "success");
@@ -475,7 +475,7 @@
 
                         {/* PIN AUTHENTIFIZIERUNG FÜR LEHRER */}
                         {isTeacher && !pinCorrect && (
-                            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm max-w-md mx-auto text-center">
+                            <div className="bg-white border border-neutral-200 rounded-3xl p-8 shadow-sm max-w-md mx-auto text-center animate-fade-in">
                                 <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-700"><LockIcon /></div>
                                 <h2 className="text-xl font-bold text-neutral-900 mb-2">Lehrer-Bereich freischalten</h2>
                                 <p className="text-sm text-neutral-600 mb-6">Bitte geben Sie Ihr Passwort ein, um neue Zusatztermine anzubieten und Buchungen zu verwalten.</p>
@@ -570,7 +570,7 @@
                         {/* SCHÜLER-ANSICHT */}
                         {!isTeacher && (
                             <div className="space-y-6">
-                                <div className="bg-amber-50 border border-amber-200 rounded-3xl p-6 shadow-sm">
+                                <div className="bg-amber-50 border border-amber-200 rounded-3xl p-6 shadow-sm animate-fade-in">
                                     <div className="flex items-start gap-4">
                                         <div className="p-2 bg-amber-100 rounded-2xl text-amber-800 shrink-0"><AlertIcon /></div>
                                         <div className="space-y-1">
